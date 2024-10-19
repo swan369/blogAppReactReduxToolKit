@@ -3,10 +3,10 @@ import { nanoid } from "@reduxjs/toolkit";
 import { changeTitle, changeDetail, addBlog, reset } from "../store/index";
 
 function BlogCreate() {
+  const dispatch = useDispatch();
+
   const title = useSelector((state) => state.form.title);
   const detail = useSelector((state) => state.form.detail);
-
-  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,21 +14,19 @@ function BlogCreate() {
     dispatch(reset());
   };
 
-  const handleTitleChange = (e) => {
-    dispatch(changeTitle(e.target.value));
-  };
-
-  const handleDetailChange = (e) => {
-    dispatch(changeDetail(e.target.value));
-  };
-
   return (
     <>
       <form onSubmit={handleSubmit}>
         <label>Title: </label>
-        <input onChange={handleTitleChange} value={title}></input>
+        <input
+          onChange={(e) => dispatch(changeTitle(e.target.value))}
+          value={title}
+        ></input>
         <label>Details: </label>
-        <input onChange={handleDetailChange} value={detail}></input>
+        <input
+          onChange={(e) => dispatch(changeDetail(e.target.value))}
+          value={detail}
+        ></input>
         <button type="submit">submit</button>
       </form>
     </>
