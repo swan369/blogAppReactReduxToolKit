@@ -8,7 +8,7 @@ function BlogCreate() {
   const title = useSelector((state) => state.form.title);
   const detail = useSelector((state) => state.form.detail);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(addBlog({ title, detail, id: nanoid() }));
     dispatch(reset());

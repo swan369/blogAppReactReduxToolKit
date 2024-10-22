@@ -2,7 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import formReducer from "./slices/formSlice";
 import { changeDetail, changeTitle } from "./slices/formSlice";
 import blogReducer from "./slices/blogSlice";
-import { addBlog, removeBlog, updateBlog } from "./slices/blogSlice";
+import {
+  fetchBlogs,
+  addBlog,
+  removeBlog,
+  updateBlog,
+} from "./slices/blogSlice";
 import { reset } from "./slices/actions";
 import {
   changeTitle as changeUpdateTitle,
@@ -31,12 +36,13 @@ export {
   store,
   changeDetail,
   changeTitle,
+  fetchBlogs,
   addBlog,
   removeBlog,
+  updateBlog,
   reset,
   toggleUpdate,
   changeUpdateDetail,
   changeUpdateTitle,
   visualUpdateBlog,
-  updateBlog,
 };

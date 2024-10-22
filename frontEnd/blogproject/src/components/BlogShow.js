@@ -17,8 +17,6 @@ function BlogShow({ id, title, detail }) {
     dispatch(toggleUpdate());
   };
 
-  console.log(isBlogUpdate);
-
   if (isBlogUpdate) {
     return <BlogEdit id={id} />;
   }

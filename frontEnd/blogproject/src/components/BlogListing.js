@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 
 function BlogListing() {
   const blogs = useSelector((state) => {
-    return state.blogs;
+    return state.blogs.blogs;
   });
 
-  const renderedBlogs = blogs.map((blog) => (
-    <BlogShow key={blog.id} {...blog} />
-  ));
+  const renderedBlogs = blogs.map((blog) => {
+    return <BlogShow key={blog.id} {...blog} />;
+  });
 
   return (
     <>
