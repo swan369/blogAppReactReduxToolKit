@@ -52,8 +52,11 @@ export const removeBlog = createAsyncThunk(
 
 export const updateBlog = createAsyncThunk(
   "blogs/updateBlog",
-  async (blogId, updatedBlog) => {
-    const response = await axios.put(`${BASEURL}/blogs/${blogId}`, updatedBlog);
+  async (updatedBlog) => {
+    const response = await axios.put(
+      `${BASEURL}/blogs/${updatedBlog.id}`,
+      updatedBlog
+    );
     return response.data;
   }
 );

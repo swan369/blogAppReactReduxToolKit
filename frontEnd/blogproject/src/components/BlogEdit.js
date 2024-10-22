@@ -12,7 +12,7 @@ import { useEffect } from "react";
 function BlogEdit({ id }) {
   const dispatch = useDispatch();
   const blog = useSelector((state) =>
-    state.blogs.find((blog) => blog.id === id)
+    state.blogs.blogs.find((blog) => blog.id === id)
   );
 
   const updatedBlog = useSelector((state) => {
