@@ -8,6 +8,9 @@ function BlogShow({ id, title, detail }) {
   const { isBlogUpdate } = useSelector((state) => {
     return state.update;
   });
+  const { loading, error } = useSelector((state) => {
+    return state.blogs;
+  });
 
   const handleDelete = () => {
     dispatch(removeBlog(id));
@@ -20,6 +23,9 @@ function BlogShow({ id, title, detail }) {
   if (isBlogUpdate) {
     return <BlogEdit id={id} />;
   }
+
+  if (loading) return <div>is Loading...</div>;
+  if (error) return <div>error: {error} </div>;
 
   return (
     <>

@@ -6,6 +6,13 @@ function BlogListing() {
     return state.blogs.blogs;
   });
 
+  const { loading, error } = useSelector((state) => {
+    return state.blogs;
+  });
+
+  if (loading) return <div>is Loading...</div>;
+  if (error) return <div>error: {error} </div>;
+
   const renderedBlogs = blogs.map((blog) => {
     return <BlogShow key={blog.id} {...blog} />;
   });

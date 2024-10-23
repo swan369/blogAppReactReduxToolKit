@@ -15,6 +15,10 @@ function BlogEdit({ id }) {
     state.blogs.blogs.find((blog) => blog.id === id)
   );
 
+  const { loading, error } = useSelector((state) => {
+    return state.blogs;
+  });
+
   const updatedBlog = useSelector((state) => {
     return state.update.blogChange;
   });
@@ -28,6 +32,9 @@ function BlogEdit({ id }) {
     dispatch(updateBlog(updatedBlog));
     dispatch(toggleUpdate());
   };
+
+  if (loading) return <div>is Loading...</div>;
+  if (error) return <div>error: {error} </div>;
 
   return (
     <>

@@ -11,11 +11,9 @@ const formSlice = createSlice({
   reducers: {
     changeTitle(state, action) {
       return { ...state, title: action.payload };
-      //..//
     },
     changeDetail(state, action) {
       return { ...state, detail: action.payload };
-      //..//
     },
   },
 
