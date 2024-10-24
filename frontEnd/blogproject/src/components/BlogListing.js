@@ -1,4 +1,4 @@
-import { BlogShow } from "./BlogShow";
+import { BlogShowBrief } from "./BlogShowBrief";
 import { useSelector } from "react-redux";
 
 function BlogListing() {
@@ -14,7 +14,7 @@ function BlogListing() {
   if (error) return <div>error: {error} </div>;
 
   const renderedBlogs = blogs.map((blog) => {
-    return <BlogShow key={blog.id} {...blog} />;
+    return <BlogShowBrief key={blog.id} {...blog} />;
   });
 
   return (

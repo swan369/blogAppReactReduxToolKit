@@ -1,40 +1,37 @@
 import { Outlet } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchTerm, searchedBlogs } from "../store/index";
-// import { useState } from "react";
+import { setSearchTerm, setQuery } from "../store/index";
+import { useNavigate } from "react-router";
 
 function Root() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const blogs = useSelector((state) => {
-    return state.blogs.blogs;
-  });
-
-  console.log(blogs);
-
-  const search = useSelector((state) => {
+  const searchTerm = useSelector((state) => {
     return state.blogSearch.searchTerm;
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(searchedBlogs(blogs));
-    console.log("hello");
-    //...//
+    if (searchTerm.trim()) navigate(`/blogs/search?query=${searchTerm}`);
+    dispatch(setSearchTerm(""));
+    dispatch(setQuery(searchTerm));
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>Search</label>
-        <input
-          onChange={(e) => dispatch(setSearchTerm(e.target.value))}
-          value={search}
-        ></input>
-        <button>submit</button>
-      </form>
-      <Outlet />
-    </div>
+    <>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <label>Search</label>
+          <input
+            onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+            value={searchTerm}
+          ></input>
+          <button>submit</button>
+        </form>
+        <Outlet />
+      </div>
+    </>
   );
 }
 

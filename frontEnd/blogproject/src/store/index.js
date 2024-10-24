@@ -3,7 +3,11 @@ import formReducer from "./slices/formSlice";
 import { changeDetail, changeTitle } from "./slices/formSlice";
 import blogReducer from "./slices/blogSlice";
 import blogSearchReducer from "./slices/blogSearchSlice";
-import { setSearchTerm, searchedBlogs } from "./slices/blogSearchSlice";
+import {
+  setSearchTerm,
+  searchedBlogs,
+  setQuery,
+} from "./slices/blogSearchSlice";
 import { reset } from "./slices/actions";
 import {
   changeTitle as changeUpdateTitle,
@@ -40,6 +44,7 @@ export {
   visualUpdateBlog,
   setSearchTerm,
   searchedBlogs,
+  setQuery,
 };
 
 export { addBlog, removeBlog, updateBlog, fetchBlogs } from "./thunks/thunks";

@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { changeTitle, changeDetail, addBlog, reset } from "../store/index";
-
+import { faker } from "@faker-js/faker";
 function BlogCreate() {
   const dispatch = useDispatch();
   const title = useSelector((state) => state.form.title);
@@ -12,7 +12,9 @@ function BlogCreate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(addBlog({ title, detail, id: nanoid() }));
+    dispatch(
+      addBlog({ title, detail, id: nanoid(), image: faker.image.url() })
+    );
     dispatch(reset());
   };
 

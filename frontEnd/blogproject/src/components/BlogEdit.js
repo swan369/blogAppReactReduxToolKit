@@ -15,6 +15,10 @@ function BlogEdit({ id }) {
     state.blogs.blogs.find((blog) => blog.id === id)
   );
 
+  const isBlogUpdate = useSelector((state) => {
+    return state.update.isBlogUpdate;
+  });
+
   const { loading, error } = useSelector((state) => {
     return state.blogs;
   });
@@ -24,13 +28,15 @@ function BlogEdit({ id }) {
   });
 
   useEffect(() => {
-    dispatch(visualUpdateBlog(blog));
+    if (blog) {
+      dispatch(visualUpdateBlog(blog));
+    }
   }, [blog, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateBlog(updatedBlog));
-    dispatch(toggleUpdate());
+    dispatch(toggleUpdate({ id, isUpdate: !isBlogUpdate }));
   };
 
   if (loading) return <div>is Loading...</div>;
@@ -53,7 +59,11 @@ function BlogEdit({ id }) {
 
         <button type="submit">Submit</button>
       </form>
-      <button onClick={() => dispatch(toggleUpdate())}>Cancel</button>
+      <button
+        onClick={() => dispatch(toggleUpdate({ id, isUpdate: !isBlogUpdate }))}
+      >
+        Cancel
+      </button>
     </>
   );
 }
