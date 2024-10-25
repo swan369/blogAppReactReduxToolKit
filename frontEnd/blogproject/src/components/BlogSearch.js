@@ -11,27 +11,23 @@ const BlogSearch = () => {
   const query = searchParams.get("query");
 
   const blogs = useSelector((state) => state.blogs.blogs);
+  const blogsFound = useSelector((state) => state.blogSearch.blogs);
 
   useEffect(() => {
     dispatch(searchedBlogs({ blogs, query }));
   }, [query, blogs, dispatch]);
 
-  const blogsFound = useSelector((state) => state.blogSearch.blogs);
-
-  const renderedBlogs = blogsFound.map((blog) => (
-    <BlogShowBrief key={blog.id} {...blog} />
-  ));
+  const renderedBlogs =
+    blogsFound.length > 0 ? (
+      blogsFound.map((blog) => <BlogShowBrief key={blog.id} {...blog} />)
+    ) : (
+      <div>No results found</div>
+    );
 
   return (
     <>
       <div>
-        <ul>
-          {renderedBlogs.length > 0 ? (
-            renderedBlogs
-          ) : (
-            <li>No results found.</li>
-          )}
-        </ul>
+        <ul>{renderedBlogs}</ul>
       </div>
     </>
   );

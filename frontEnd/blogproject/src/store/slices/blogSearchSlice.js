@@ -10,19 +10,15 @@ const blogSearchSlice = createSlice({
 
     // need to rerun searchedBlogs, as editedBlog does not auto update blogSearch blog
     searchedBlogs(state, action) {
-      const blogs = action.payload.blogs;
-      const searchedTerm = action.payload.query;
-      let searchedBlogs = [];
+      const { blogs, query } = action.payload;
 
-      if (searchedTerm) {
-        searchedBlogs = blogs.filter((blog) =>
-          //   blog.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-          blog.title.toLowerCase().includes(searchedTerm.toLowerCase())
-        );
-      }
-
-      return { ...state, blogs: searchedBlogs };
+      state.blogs = query
+        ? blogs.filter((blog) =>
+            blog.title.toLowerCase().includes(query.toLowerCase())
+          )
+        : [];
     },
+
     setQuery(state, action) {
       state.query = action.payload;
     },

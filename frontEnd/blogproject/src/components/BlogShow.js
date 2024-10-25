@@ -1,44 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { removeBlog } from "../store/index";
-import { toggleUpdate } from "../store/index";
+import { removeBlog, toggleUpdate } from "../store/index";
 import { BlogEdit } from "./BlogEdit";
 
-function BlogShow(props) {
-  const navigate = useNavigate();
+function BlogShow() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isBlogUpdate } = useSelector((state) => {
-    return state.update;
-  });
+  const { blogs, loading, error } = useSelector((state) => state.blogs);
+  const { isBlogUpdate, blogBeingEdited } = useSelector(
+    (state) => state.update
+  );
 
-  const query = useSelector((state) => {
-    return state.blogSearch.query;
-  });
+  const query = useSelector((state) => state.blogSearch.query);
 
-  const blogs = useSelector((state) => {
-    return state.blogs.blogs;
-  });
-
-  let image;
-  let title;
-  let detail;
-
-  const found = blogs.find((blog) => blog.id === id);
-  if (found) {
-    image = found.image;
-    title = found.title;
-    detail = found.detail;
-  }
-
-  const { loading, error } = useSelector((state) => {
-    return state.blogs;
-  });
-
-  const blogIdBeingEdited = useSelector((state) => {
-    return state.update.blogBeingEdited;
-  });
+  const foundBlog = blogs.find((blog) => blog.id === id);
 
   const handleDelete = () => {
     dispatch(removeBlog(id));
@@ -49,33 +26,36 @@ function BlogShow(props) {
     dispatch(toggleUpdate({ id, isUpdate: !isBlogUpdate }));
   };
 
-  if (isBlogUpdate && blogIdBeingEdited === id) {
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (isBlogUpdate && blogBeingEdited === id) {
     return <BlogEdit id={id} />;
   }
 
-  if (loading) return <div>is Loading...</div>;
-  if (error) return <div>error: {error} </div>;
-
-  return (
-    <>
-      <li>
-        <img
-          src={image}
-          alt="a pix"
-          style={{ width: "200px", height: "200px" }}
-        />
-        title: {title} detail: {detail}
-        <button type="button" onClick={handleDelete}>
-          delete
-        </button>
-        <button type="button" onClick={handleEdit}>
-          edit
-        </button>
-        <button onClick={() => navigate(`/blogs/search?query=${query}`)}>
-          return
-        </button>
-      </li>
-    </>
+  return foundBlog ? (
+    <li>
+      <img
+        src={foundBlog.image}
+        alt="Blog"
+        style={{ width: "200px", height: "200px" }}
+      />
+      <div>Title: {foundBlog.title}</div>
+      <div>Detail: {foundBlog.detail}</div>
+      <button type="button" onClick={handleDelete}>
+        Delete
+      </button>
+      <button type="button" onClick={handleEdit}>
+        Edit
+      </button>
+      <button
+        type="button"
+        onClick={() => navigate(`/blogs/search?query=${query}`)}
+      >
+        Return
+      </button>
+    </li>
+  ) : (
+    <div>Blog not found</div>
   );
 }
 

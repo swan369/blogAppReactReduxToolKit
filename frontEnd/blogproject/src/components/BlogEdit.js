@@ -11,21 +11,12 @@ import { useEffect } from "react";
 
 function BlogEdit({ id }) {
   const dispatch = useDispatch();
+
   const blog = useSelector((state) =>
     state.blogs.blogs.find((blog) => blog.id === id)
   );
-
-  const isBlogUpdate = useSelector((state) => {
-    return state.update.isBlogUpdate;
-  });
-
-  const { loading, error } = useSelector((state) => {
-    return state.blogs;
-  });
-
-  const updatedBlog = useSelector((state) => {
-    return state.update.blogChange;
-  });
+  const { loading, error } = useSelector((state) => state.blogs);
+  const { isBlogUpdate, blogChange } = useSelector((state) => state.update);
 
   useEffect(() => {
     if (blog) {
@@ -35,7 +26,7 @@ function BlogEdit({ id }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateBlog(updatedBlog));
+    dispatch(updateBlog(blogChange));
     dispatch(toggleUpdate({ id, isUpdate: !isBlogUpdate }));
   };
 
@@ -48,13 +39,13 @@ function BlogEdit({ id }) {
         <label>Title: </label>
         <input
           onChange={(e) => dispatch(changeUpdateTitle(e.target.value))}
-          value={updatedBlog.title}
+          value={blogChange.title}
         />
 
         <label>Detail: </label>
         <input
           onChange={(e) => dispatch(changeUpdateDetail(e.target.value))}
-          value={updatedBlog.detail}
+          value={blogChange.detail}
         />
 
         <button type="submit">Submit</button>
