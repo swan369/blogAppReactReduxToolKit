@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASEURL = "http://localhost:3005";
+const BASEURL = "http://localhost:3021";
 
 // "blog/fetchBlogs can be named anything, it is used as identifier"
 export const fetchBlogs = createAsyncThunk("blog/fetchBlogs", async () => {
@@ -11,7 +11,7 @@ export const fetchBlogs = createAsyncThunk("blog/fetchBlogs", async () => {
 });
 
 export const addBlog = createAsyncThunk("blog/addBlogs", async (newBlog) => {
-  const response = await axios.post(`${BASEURL}/blogs`, newBlog);
+  const response = await axios.post(`${BASEURL}/blogs/create`, newBlog);
   return response.data;
 });
 

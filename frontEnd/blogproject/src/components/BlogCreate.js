@@ -12,9 +12,11 @@ function BlogCreate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Await the dispatch if addBlog is an asynchronous action
     dispatch(
-      addBlog({ title, detail, id: nanoid(), image: faker.image.url() })
+      addBlog({ title, detail, id: nanoid(), imageURL: faker.image.url() })
     );
+    // Reset the form after the blog has been added
     dispatch(reset());
   };
 
