@@ -27,8 +27,8 @@ const formSlice = createSlice({
   },
 });
 
-console.log(formSlice);
-console.log(formSlice.reducer);
+// console.log(formSlice);
+// console.log(formSlice.reducer);
 
 export const { changeTitle, changeDetail } = formSlice.actions;
 export default formSlice.reducer;

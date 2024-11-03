@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const blogSearchSlice = createSlice({
   name: "blogSearch",
-  initialState: { blogs: [], searchTerm: "", query: "" },
+  initialState: { blogs: [], searchTerm: "", query: "", isQuery: false },
   reducers: {
     setSearchTerm(state, action) {
       state.searchTerm = action.payload;
@@ -22,9 +22,12 @@ const blogSearchSlice = createSlice({
     setQuery(state, action) {
       state.query = action.payload;
     },
+    setIsQuery(state, action) {
+      state.isQuery = action.payload;
+    },
   },
 });
 
-export const { setSearchTerm, searchedBlogs, setQuery } =
+export const { setSearchTerm, searchedBlogs, setQuery, setIsQuery } =
   blogSearchSlice.actions;
 export default blogSearchSlice.reducer;

@@ -7,6 +7,7 @@ import {
   setSearchTerm,
   searchedBlogs,
   setQuery,
+  setIsQuery,
 } from "./slices/blogSearchSlice";
 import { reset } from "./slices/actions";
 import {
@@ -45,6 +46,13 @@ export {
   setSearchTerm,
   searchedBlogs,
   setQuery,
+  setIsQuery,
 };
 
-export { addBlog, removeBlog, updateBlog, fetchBlogs } from "./thunks/thunks";
+export {
+  addBlog,
+  removeBlog,
+  updateBlog,
+  fetchBlogs,
+  getBlogById,
+} from "./thunks/thunks";

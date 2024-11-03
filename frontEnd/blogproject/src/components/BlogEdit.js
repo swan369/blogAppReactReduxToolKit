@@ -5,6 +5,7 @@ import {
   visualUpdateBlog,
   changeUpdateDetail,
   changeUpdateTitle,
+  fetchBlogs,
 } from "../store/index";
 
 import { useEffect } from "react";
@@ -28,6 +29,7 @@ function BlogEdit({ id }) {
     e.preventDefault();
     dispatch(updateBlog(blogChange));
     dispatch(toggleUpdate({ id, isUpdate: !isBlogUpdate }));
+    dispatch(fetchBlogs());
   };
 
   if (loading) return <div>is Loading...</div>;

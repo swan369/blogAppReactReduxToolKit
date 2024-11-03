@@ -27,9 +27,16 @@
 // export default blogSlice.reducer;
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBlogs, addBlog, removeBlog, updateBlog } from "../index";
+import {
+  fetchBlogs,
+  addBlog,
+  removeBlog,
+  updateBlog,
+  getBlogById,
+} from "../index";
 
 const initialState = {
+  blog: {},
   blogs: [],
   loading: false,
   error: null,
@@ -40,7 +47,6 @@ const blogSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    //fetch blogs
     builder
       .addCase(fetchBlogs.pending, (state) => {
         state.pending = true;
@@ -87,6 +93,18 @@ const blogSlice = createSlice({
         state.blogs = state.blogs.map((blog) =>
           blog.id === action.payload.id ? action.payload : blog
         );
+      })
+      .addCase(getBlogById.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getBlogById.fulfilled, (state, action) => {
+        console.log("insideBlogSlicegetBlogById", action.payload);
+        state.loading = false;
+        state.blog = action.payload;
+      })
+      .addCase(getBlogById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });

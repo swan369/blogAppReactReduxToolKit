@@ -1,29 +1,47 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { removeBlog, toggleUpdate } from "../store/index";
+import {
+  removeBlog,
+  toggleUpdate,
+  fetchBlogs,
+  getBlogById,
+} from "../store/index";
 import { BlogEdit } from "./BlogEdit";
+import DOMPurify from "dompurify";
+import { useState } from "react";
 
 function BlogShow() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // const [fileContent, setFileContent] = useState(null);
+
   const { blogs, loading, error } = useSelector((state) => state.blogs);
   const { isBlogUpdate, blogBeingEdited } = useSelector(
     (state) => state.update
   );
 
-  const query = useSelector((state) => state.blogSearch.query);
+  const { query, isQuery } = useSelector((state) => state.blogSearch);
 
   const foundBlog = blogs.find((blog) => blog.id === id);
 
-  const handleDelete = () => {
-    dispatch(removeBlog(id));
-    navigate(`/blogs/search?query=${query}`);
+  const handleDelete = async () => {
+    await dispatch(removeBlog(id));
+    dispatch(fetchBlogs());
+    if (isQuery) {
+      navigate(`/blogs/search?query=${query}`);
+    } else navigate(`/blogs`);
   };
 
   const handleEdit = () => {
     dispatch(toggleUpdate({ id, isUpdate: !isBlogUpdate }));
+  };
+
+  const handleIsQuery = () => {
+    if (isQuery) {
+      navigate(`/blogs/search?query=${query}`);
+    } else navigate(`/blogs`);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -35,22 +53,20 @@ function BlogShow() {
   return foundBlog ? (
     <li>
       <img
-        src={foundBlog.image}
+        src={foundBlog.imageURL}
         alt="Blog"
         style={{ width: "200px", height: "200px" }}
       />
-      <div>Title: {foundBlog.title}</div>
       <div>Detail: {foundBlog.detail}</div>
+      <div dangerouslySetInnerHTML={{ __html: foundBlog.content }} />
+
       <button type="button" onClick={handleDelete}>
         Delete
       </button>
       <button type="button" onClick={handleEdit}>
         Edit
       </button>
-      <button
-        type="button"
-        onClick={() => navigate(`/blogs/search?query=${query}`)}
-      >
+      <button type="button" onClick={handleIsQuery}>
         Return
       </button>
     </li>
