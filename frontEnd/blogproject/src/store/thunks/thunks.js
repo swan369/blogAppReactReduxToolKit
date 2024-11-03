@@ -23,7 +23,7 @@ export const addBlog = createAsyncThunk("blog/addBlogs", async (newBlog) => {
   try {
     const response = await axios.post(`${BASEURL}/blogs/create`, formData);
 
-    console.log("returned object from backend in addBlog", response.data);
+    // console.log("returned object from backend in addBlog", response.data);
 
     return response.data; // goes to action.payload at blogSlice
   } catch (error) {
@@ -67,13 +67,11 @@ export const getBlogById = createAsyncThunk(
   async (blogId) => {
     try {
       const blogResponse = await axios.get(`${BASEURL}/blogs/${blogId}`);
-      const blogData = blogResponse.data; // axios auto JSON.parse() the JSON reponse
+      const blogData = blogResponse.data; // axios auto JSON.parse() the JSON response
       console.log("inThunksGetBlogById", blogData);
 
       // Fetch the HTML file content if `fileId` exists in the blog data
       if (blogData.fileId) {
-        // const test = "67272c5f124055e2f4c33bdb";
-
         const fileResponse = await axios.get(
           `${BASEURL}/blogs/${blogData.fileId}/file`,
           // `${BASEURL}/blogs/${test}/file`,
@@ -94,7 +92,7 @@ export const getBlogById = createAsyncThunk(
 
         blogData.htmlContent = htmlContent; // Add HTML string content to blog data
       }
-      console.log("InThunksblogData:", blogData);
+      console.log("InThunksGetBlogById:", blogData);
 
       return blogData;
     } catch (error) {

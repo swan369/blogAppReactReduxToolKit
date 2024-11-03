@@ -17,9 +17,22 @@ async function connectToDatabase() {
     await mongoose.connect(
       `mongodb+srv://${process.env.userNamePw}@clusterweb.1t4x2.mongodb.net/?retryWrites=true&w=majority&appName=ClusterWeb`
     );
-    console.log("Connected to MongoDB successfully!");
+    console.log("Connected to MongoDB successfully");
+
+    // Initialize GridFSBucket after a successful connection
+    app.locals.gfsBucket = new mongoose.mongo.GridFSBucket(
+      mongoose.connection.db,
+      // access app.locals.gfsBucket in other files via req.
+      // e.g const gfsBucket =  req.app.locals.gfsBucket
+      {
+        bucketName: "uploads",
+      }
+    );
+    console.log(
+      "GridFSBucket initialized and connected to MongoDB successfully!"
+    );
   } catch (error) {
-    console.error("MongoDB connection error:", error.message);
+    console.error("Error during MongoDB connection setup:", error);
   }
 }
 
